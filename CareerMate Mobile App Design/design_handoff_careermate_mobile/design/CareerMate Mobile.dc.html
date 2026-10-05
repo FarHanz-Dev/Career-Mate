@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-1ef78114-c218-47af-b65d-8157242ffa7b/styles.css">
+<script src="_ds/modernist-1ef78114-c218-47af-b65d-8157242ffa7b/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#e6e4e4}
+:root{
+--color-accent:#0a66c2;--color-accent-2:#0a66c2;
+--color-accent-100:#eef5fc;--color-accent-200:#d7e8f8;--color-accent-300:#b0d2f2;
+--color-accent-400:#6ea9e3;--color-accent-500:#2d80d2;--color-accent-600:#0a66c2;
+--color-accent-700:#084f97;--color-accent-800:#073a6e;--color-accent-900:#0a2b4f;
+--color-accent-2-100:#eef5fc;--color-accent-2-200:#d7e8f8;--color-accent-2-300:#b0d2f2;
+--color-accent-2-400:#6ea9e3;--color-accent-2-500:#2d80d2;--color-accent-2-600:#0a66c2;
+--color-accent-2-700:#084f97;--color-accent-2-800:#073a6e;--color-accent-2-900:#0a2b4f;
+}
+@keyframes cmShimmer{0%{opacity:.35}50%{opacity:1}100%{opacity:.35}}
+@keyframes cmRise{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes cmSheet{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.cm-scroll{scrollbar-width:none;min-height:0;flex-shrink:1}
+.cm-scroll::-webkit-scrollbar{display:none}
+.cm-row:active{background:#eae9e9}
+a{color:var(--color-accent)}
+a:hover{color:var(--color-accent-700)}
+</style>
+</helmet>
+
+<div style="display:flex;gap:44px;align-items:flex-start;padding:{{ pagePad }};font-family:var(--font-body);min-height:{{ pageMinH }}">
+
+<div style="display:flex;flex-direction:column;gap:14px;flex:none">
+<sc-if value="{{ chrome }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--color-divider);padding-bottom:8px;min-width:402px">
+<svg width="22" height="22" viewBox="20 14 566 566" aria-label="CareerMate" style="flex:none;display:block"><rect x="20" y="14" width="566" height="566" rx="62" fill="#0a66c2"></rect><rect x="152" y="155" width="94" height="283" rx="16" fill="#fff"></rect><rect x="256" y="155" width="94" height="188" rx="16" fill="#fff"></rect><rect x="360" y="155" width="94" height="283" rx="16" fill="#fff"></rect></svg><span style="margin-left:-4px;font-family:var(--font-heading);font-weight:800;font-size:15px;letter-spacing:-.01em">CAREERMATE</span>
+<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">Mobile prototype</span>
+<span style="margin-left:auto;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-accent-700)">{{ screenLabel }}</span>
+</div>
+</sc-if>
+
+<x-import component-from-global-scope="{{ deviceComponent }}" from="./ios-frame.jsx ./android-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);overflow:hidden;padding:{{ rootPad }};--radius-sm:{{ rSm }};--radius-md:{{ rMd }};--radius-lg:{{ rLg }}">
+<div style="flex:1;min-height:0;position:relative;overflow:hidden;display:flex;flex-direction:column">
+
+<sc-if value="{{ isSignin }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;background:var(--color-accent);color:#fff">
+<div style="flex:none;height:30px"></div>
+<div style="flex:1;min-height:0;padding:0 24px;display:flex;flex-direction:column;justify-content:center;gap:22px">
+<div>
+<div style="display:flex;align-items:center;gap:16px"><svg width="96" height="96" viewBox="20 14 566 566" aria-label="CareerMate" style="flex:none;display:block"><rect x="20" y="14" width="566" height="566" rx="62" fill="#fff"></rect><rect x="152" y="155" width="94" height="283" rx="16" fill="#0a66c2"></rect><rect x="256" y="155" width="94" height="188" rx="16" fill="#0a66c2"></rect><rect x="360" y="155" width="94" height="283" rx="16" fill="#0a66c2"></rect></svg><div style="font-family:var(--font-heading);font-weight:800;font-size:52px;line-height:.94;letter-spacing:-.035em">CAREER<br>MATE</div></div>
+<div style="height:2px;background:#fff;margin:22px 0 18px;width:120px;opacity:.9"></div>
+<div style="font-size:17px;font-weight:600;line-height:1.4;max-width:280px">Read the posting. Match your CV. Send the mail.</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:11px;padding-top:4px">
+<sc-for list="{{ signinSteps }}" as="st" hint-placeholder-count="3">
+<div style="display:flex;align-items:baseline;gap:11px">
+<span style="flex:none;width:19px;height:19px;border-radius:var(--radius-sm);background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:11px">{{ st.n }}</span>
+<span style="font-size:14px;line-height:1.45">{{ st.text }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="flex:none;background:var(--color-bg);color:var(--color-text);padding:26px 24px 30px;display:flex;flex-direction:column;gap:14px">
+<button onClick="{{ goProfile }}" style="width:100%;min-height:54px;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;background:#fff;border:1px solid var(--color-neutral-400);border-radius:var(--radius-md);font-family:var(--font-heading);font-weight:800;font-size:15.5px;color:var(--color-neutral-900);box-shadow:var(--shadow-sm)">
+<svg width="21" height="21" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.6H24v8.7h11.8c-.5 2.7-2.1 5-4.4 6.5v5.4h7.1c4.1-3.8 6.6-9.4 6.6-16z"></path><path fill="#34A853" d="M24 46c6 0 11-2 14.5-5.4l-7.1-5.4c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.6C8.1 41.3 15.4 46 24 46z"></path><path fill="#FBBC05" d="M11.8 28.3c-.4-1.3-.7-2.7-.7-4.3s.3-3 .7-4.3v-5.6H4.5C2.9 17.3 2 20.5 2 24s.9 6.7 2.5 9.6l7.3-5.3z"></path><path fill="#EA4335" d="M24 10.2c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3C35 3.6 30 1.5 24 1.5 15.4 1.5 8.1 6.2 4.5 13.4l7.3 5.6c1.7-5.2 6.5-8.8 12.2-8.8z"></path></svg>
+Continue with Google
+</button>
+<div style="font-size:12.5px;line-height:1.5;color:var(--color-neutral-800);text-align:center">Mail is sent from your own Google account, so Google is the only way in.</div>
+<div style="border-top:1px solid var(--color-divider);padding-top:12px;font-size:11px;line-height:1.5;color:var(--color-neutral-700);text-align:center">CareerMate reads only the screenshots and CV files you upload. Nothing is sent without your tap.</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ goInbox }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:17px">Career profile</div>
+<div style="margin-left:auto;font-size:11px;letter-spacing:.08em;color:var(--color-neutral-700)">{{ profileStepLabel }}</div>
+</div>
+<div style="display:flex;gap:4px;padding:0 16px;flex:none;margin-top:12px">
+<sc-for list="{{ profileRail }}" as="p" hint-placeholder-count="3">
+<div style="height:4px;flex:1;border-radius:var(--radius-sm);background:{{ p.bg }}"></div>
+</sc-for>
+</div>
+<div style="display:flex;gap:8px;padding:10px 16px 0;flex:none">
+<sc-for list="{{ profileRail }}" as="p" hint-placeholder-count="3">
+<button onClick="{{ p.onClick }}" style="flex:1;border:0;background:transparent;padding:0;cursor:pointer;text-align:left;font-family:var(--font-heading);font-weight:800;font-size:10px;letter-spacing:.07em;color:{{ p.fg }}">{{ p.name }}</button>
+</sc-for>
+</div>
+
+<div class="cm-scroll" style="flex:1;overflow-y:auto;padding:18px 16px 24px;display:flex;flex-direction:column;gap:18px">
+
+<sc-if value="{{ profileStep1 }}">
+<div style="font-size:13px;line-height:1.5;color:var(--color-neutral-700)">This is the standing context every draft reads, so the AI never has to be told who you are twice.</div>
+<div class="field"><label>Full name</label><input class="input" value="{{ profile.name }}" onChange="{{ onProfileName }}"></div>
+<div class="field"><label>Headline as it should read in mail</label><input class="input" value="{{ profile.headline }}" onChange="{{ onProfileHeadline }}"></div>
+<div class="field"><label>Work email you send from</label><input class="input" value="{{ profile.email }}" onChange="{{ onProfileEmail }}"></div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Years of experience</div>
+<div class="seg" style="border-radius:var(--radius-md);overflow:hidden">
+<label class="seg-opt"><input type="radio" name="yrs">0–2</label>
+<label class="seg-opt"><input type="radio" name="yrs">3–4</label>
+<label class="seg-opt"><input type="radio" name="yrs" checked="">5–7</label>
+<label class="seg-opt"><input type="radio" name="yrs">8+</label>
+</div>
+</div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Target roles, tap to include</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{ roleChips }}" as="rc" hint-placeholder-count="6">
+<button onClick="{{ rc.onClick }}" class="tag {{ rc.cls }}" style="border:1px solid {{ rc.bd }};cursor:pointer;font-family:var(--font-body);font-size:11.5px">{{ rc.label }}</button>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Where you want to work</div>
+<div class="seg" style="border-radius:var(--radius-md);overflow:hidden">
+<label class="seg-opt"><input type="radio" name="loc" checked="">Remote</label>
+<label class="seg-opt"><input type="radio" name="loc">Jakarta</label>
+<label class="seg-opt"><input type="radio" name="loc">Hybrid</label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ profileStep2 }}">
+<div style="font-size:13px;line-height:1.5;color:var(--color-neutral-700)">Upload the CV you send most often. It is read once, and the skills and experience it finds become the default context for scoring and drafting.</div>
+<button onClick="{{ uploadProfileCv }}" style="border:2px dashed var(--color-divider);border-radius:var(--radius-lg);background:var(--color-surface);padding:28px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;cursor:pointer;text-align:left;width:100%">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:16px">Upload primary CV</span>
+<span style="font-size:12px;color:var(--color-neutral-700)">PDF or Word · up to 10 MB</span>
+</button>
+<div style="display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--color-divider);padding-top:14px">
+<div style="flex:none;width:34px;height:44px;border:1px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface);display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-size:8px;letter-spacing:.06em;color:var(--color-neutral-700)">PDF</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:14px">CV_Backend_v3.pdf</div>
+<div style="font-size:11px;color:var(--color-neutral-700);margin-top:2px">Read: 18 skills, 4 roles, 2 certifications</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+<span class="tag tag-accent">Primary</span><span class="tag tag-neutral">In AI context</span>
+</div>
+</div>
+<button class="btn btn-ghost" onClick="{{ goCvBank }}" style="flex:none">Change</button>
+</div>
+<div style="border-top:1px solid var(--color-divider);padding-top:14px;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:12px;color:var(--color-neutral-700)">Let the AI read every CV in the bank, or only the primary one?</div>
+<label class="radio"><input type="radio" name="ctxscope" checked=""><span class="dot"></span>Primary CV only, tighter drafts</label>
+<label class="radio"><input type="radio" name="ctxscope"><span class="dot"></span>Every CV marked in the bank</label>
+</div>
+<button class="btn btn-secondary btn-block" onClick="{{ goCvBank }}" style="min-height:44px">Open CV Bank</button>
+</sc-if>
+
+<sc-if value="{{ profileStep3 }}">
+<div style="font-size:13px;line-height:1.5;color:var(--color-neutral-700)">Last step. These set how the mail sounds and what it is allowed to promise.</div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Mail tone the AI should write in</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ toneOptions }}" as="t" hint-placeholder-count="3">
+<label class="radio" style="align-items:flex-start">
+<input type="radio" name="tone" checked="{{ t.checked }}" onChange="{{ t.onClick }}"><span class="dot" style="margin-top:3px"></span>
+<span style="display:flex;flex-direction:column"><span style="font-weight:600">{{ t.label }}</span><span style="font-size:11.5px;color:var(--color-neutral-700)">{{ t.note }}</span></span>
+</label>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;gap:10px">
+<div class="field" style="flex:1"><label>Notice period</label><input class="input" value="{{ profile.notice }}" onChange="{{ onProfileNotice }}"></div>
+<div class="field" style="flex:1"><label>Expected salary</label><input class="input" value="{{ profile.salary }}" onChange="{{ onProfileSalary }}"></div>
+</div>
+<div class="field"><label>Sign-off line</label><input class="input" value="{{ profile.signoff }}" onChange="{{ onProfileSignoff }}"></div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Languages the AI may write in</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span class="tag tag-accent">English</span><span class="tag tag-accent">Bahasa Indonesia</span><span class="tag tag-outline">+ add</span>
+</div>
+</div>
+<div style="border-top:2px solid var(--color-divider);padding-top:14px">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:10px">Profile summary</div>
+<sc-for list="{{ profileSummary }}" as="row" hint-placeholder-count="5">
+<div style="display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--color-divider);font-size:12.5px">
+<span style="flex:none;width:104px;color:var(--color-neutral-700)">{{ row.k }}</span>
+<span style="flex:1">{{ row.v }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<div style="display:flex;gap:10px;margin-top:auto;padding-top:6px">
+<button class="btn btn-secondary" onClick="{{ profileBack }}" style="flex:1;justify-content:flex-start">{{ profileBackLabel }}</button>
+<button class="btn btn-primary" onClick="{{ profileNext }}" style="flex:2;justify-content:flex-start">{{ profileNextLabel }}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInbox }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+
+<sc-if value="{{ selectMode }}">
+<div style="display:flex;align-items:center;gap:8px;padding:12px 12px;border-bottom:2px solid var(--color-divider);background:var(--color-accent);color:#fff;flex:none">
+<button class="btn btn-icon" onClick="{{ clearSelect }}" aria-label="Close" style="color:#fff"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:16px">{{ selectedCount }} selected</div>
+<div style="margin-left:auto;display:flex;gap:2px">
+<button class="btn btn-icon" onClick="{{ archiveSelected }}" aria-label="Archive" style="color:#fff"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4"></rect><path d="M5 8v12h14V8M10 12h4"></path></svg></button>
+<button class="btn btn-icon" onClick="{{ markSelectedReplied }}" aria-label="Mark replied" style="color:#fff"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg></button>
+<button class="btn btn-icon" onClick="{{ clearSelect }}" aria-label="More" style="color:#fff"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ notSelectMode }}">
+<div style="flex:none;padding:14px 14px 12px;border-bottom:2px solid var(--color-divider)">
+<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--color-divider);background:var(--color-surface);padding:8px 10px;border-radius:var(--radius-md)">
+<button class="btn btn-icon" onClick="{{ openDrawer }}" aria-label="Menu" style="width:26px;height:26px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
+<input class="input" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search company, role, CV" style="border:0;background:transparent;min-height:26px;padding:0;font-size:14px">
+<button class="btn btn-icon" onClick="{{ goProfile }}" aria-label="Account" style="width:30px;height:30px;padding:0;background:transparent;border:0"><svg width="30" height="30" viewBox="20 14 566 566" style="display:block"><rect x="20" y="14" width="566" height="566" rx="62" fill="#0a66c2"></rect><rect x="152" y="155" width="94" height="283" rx="16" fill="#fff"></rect><rect x="256" y="155" width="94" height="188" rx="16" fill="#fff"></rect><rect x="360" y="155" width="94" height="283" rx="16" fill="#fff"></rect></svg></button>
+</div>
+<div style="display:flex;gap:6px;margin-top:10px;overflow-x:auto" class="cm-scroll">
+<sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+<button class="tag {{ c.cls }}" onClick="{{ c.onClick }}" style="border:1px solid var(--color-divider);cursor:pointer;white-space:nowrap;font-family:var(--font-body)">{{ c.label }}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div class="cm-scroll" style="flex:1;overflow-y:auto;position:relative">
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:12px 16px 8px">
+<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">{{ labelName }}, {{ visibleCount }} applications</span>
+<span style="font-size:11px;color:var(--color-accent-700)">{{ dateRange }}</span>
+</div>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+<div style="position:relative;overflow:hidden;border-bottom:1px solid var(--color-divider)">
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--color-accent);color:#fff;font-size:11px;letter-spacing:.12em;font-family:var(--font-heading);font-weight:800">
+<span>ARCHIVE</span><span>MARK REPLIED</span>
+</div>
+<div class="cm-row" onPointerDown="{{ r.onDown }}" onPointerMove="{{ r.onMove }}" onPointerUp="{{ r.onUp }}" onPointerCancel="{{ r.onUp }}" onClick="{{ r.onOpen }}" style="position:relative;background:var(--color-bg);display:flex;gap:12px;padding:{{ r.pad }};transform:{{ r.tx }};transition:{{ r.tr }};cursor:pointer;touch-action:pan-y">
+<button onClick="{{ r.onSelect }}" aria-label="Select" style="flex:none;width:38px;height:38px;border:0;padding:0;border-radius:var(--radius-md);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:13px;background:{{ r.monoBg }};color:{{ r.monoFg }}">{{ r.mono }}</button>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:baseline;gap:8px">
+<span style="font-family:var(--font-heading);font-weight:{{ r.w }};font-size:15px;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.company }}</span>
+<span style="margin-left:auto;flex:none;font-size:11px;font-weight:{{ r.dw }};color:{{ r.dateFg }}">{{ r.date }}</span>
+</div>
+<div style="display:flex;align-items:baseline;gap:6px;margin-top:1px">
+<span style="font-size:13px;font-weight:{{ r.w2 }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.role }}</span>
+<span style="flex:none;font-size:11px;color:var(--color-neutral-700)">· {{ r.cv }}</span>
+</div>
+<sc-if value="{{ showSnippet }}">
+<div style="font-size:12px;line-height:1.4;color:var(--color-neutral-700);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.snippet }}</div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:8px;margin-top:7px">
+<span class="tag {{ r.tagCls }}" style="font-size:10px;letter-spacing:.08em">{{ r.status }}</span>
+<sc-if value="{{ showScore }}">
+<span style="display:flex;align-items:center;gap:6px;margin-left:auto">
+<span style="width:46px;height:4px;background:var(--color-neutral-300);position:relative"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ r.score }}%;background:{{ r.scoreFg }}"></span></span>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:12px;color:{{ r.scoreFg }}">{{ r.score }}</span>
+</span>
+</sc-if>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+<div style="padding:22px 16px 90px;font-size:11px;line-height:1.5;color:var(--color-neutral-700)">Swipe a row sideways to archive or mark replied. Tap the square monogram to multi-select.</div>
+</div>
+
+<sc-if value="{{ fabOpen }}">
+<div onClick="{{ closeFab }}" style="position:absolute;inset:0;background:rgba(45,43,43,.45);z-index:30"></div>
+<div style="position:absolute;right:14px;bottom:150px;z-index:31;display:flex;flex-direction:column;gap:2px;min-width:230px;box-shadow:var(--shadow-lg);animation:cmRise .16s ease-out">
+<button class="btn" onClick="{{ goAddJob }}" style="background:var(--color-bg);border:1px solid var(--color-divider);justify-content:flex-start;padding:14px;gap:10px;font-size:14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>Job from screenshot</button>
+<button class="btn" onClick="{{ goCompose }}" style="background:var(--color-bg);border:1px solid var(--color-divider);justify-content:flex-start;padding:14px;gap:10px;font-size:14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"></path></svg>Write mail manually</button>
+</div>
+</sc-if>
+
+<button class="btn btn-primary" onClick="{{ toggleFab }}" aria-label="New application" style="position:absolute;right:14px;bottom:70px;width:58px;height:58px;padding:0;border-radius:var(--radius-lg);justify-content:center;box-shadow:var(--shadow-md);z-index:20">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isThread }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:6px;padding:12px 12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ goInbox }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="min-width:0">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ openApp.company }}</div>
+<div style="font-size:11px;color:var(--color-neutral-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ openApp.role }}</div>
+</div>
+<button class="btn btn-icon" onClick="{{ goMatch }}" aria-label="Match" style="margin-left:auto"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg></button>
+<button class="btn btn-icon" onClick="{{ archiveOpen }}" aria-label="Archive"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4"></rect><path d="M5 8v12h14V8M10 12h4"></path></svg></button>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto">
+<div style="padding:16px;border-bottom:2px solid var(--color-divider);background:var(--color-surface)">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700)">Job posting · read from screenshot</div>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:19px;line-height:1.15;margin-top:6px">{{ openApp.role }}</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+<span class="tag tag-neutral">{{ openApp.location }}</span><span class="tag tag-neutral">{{ openApp.level }}</span><button onClick="{{ goMatch }}" aria-label="See match evidence" style="display:inline-flex;align-items:center;gap:4px;border:0;cursor:pointer;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:800;font-size:11px;letter-spacing:.04em;padding:4px 7px 4px 9px;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.12)">{{ openApp.matchLabel }}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+
+</div>
+<div style="padding:14px 16px;border-bottom:2px solid var(--color-divider);display:flex;flex-direction:column;gap:9px">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">Reply status, you set this</div>
+<div style="display:flex;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden">
+<sc-for list="{{ replyStates }}" as="o" hint-placeholder-count="2">
+<button onClick="{{ o.onClick }}" style="flex:1;border:0;border-right:1px solid var(--color-divider);background:{{ o.bg }};color:{{ o.fg }};padding:11px 8px;cursor:pointer;font-family:var(--font-heading);font-weight:800;font-size:12.5px;text-align:left">{{ o.label }}</button>
+</sc-for>
+</div>
+
+</div>
+<sc-for list="{{ messages }}" as="m" hint-placeholder-count="2">
+<div style="border-bottom:1px solid var(--color-divider)">
+<button onClick="{{ m.onToggle }}" style="width:100%;border:0;background:transparent;padding:14px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;text-align:left;color:var(--color-text);font-family:var(--font-body)">
+<span style="font-family:var(--font-heading);font-weight:800;font-size:13.5px">{{ m.from }}</span>
+<span class="tag {{ m.tagCls }}" style="font-size:10px;letter-spacing:.08em">{{ m.kind }}</span>
+<span style="margin-left:auto;font-size:11px;color:var(--color-neutral-700)">{{ m.date }}</span>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:10.5px;letter-spacing:.06em;color:var(--color-accent-700)">{{ m.toggleLabel }}</span>
+</button>
+<sc-if value="{{ m.expanded }}">
+<div style="padding:0 16px 16px;font-size:13px;line-height:1.55;white-space:pre-line">{{ m.body }}</div>
+</sc-if>
+</div>
+</sc-for>
+<div style="padding:18px 16px 40px">
+<button class="btn btn-secondary btn-block" onClick="{{ goCompose }}" style="min-height:44px">Write a follow-up mail</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCompose }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ back }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:16px">Application mail</div>
+<button class="btn btn-primary" onClick="{{ send }}" style="margin-left:auto;justify-content:flex-start">Send</button>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto">
+<div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--color-divider)">
+<span style="flex:none;width:52px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">From</span>
+<span style="font-size:14px">karim@gmail.com</span>
+<svg style="margin-left:auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--color-divider)">
+<span style="flex:none;width:52px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">To</span>
+<input class="input" value="{{ composeTo }}" onChange="{{ onComposeTo }}" style="border:0;background:transparent;padding:0;min-height:22px">
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:2px solid var(--color-divider)">
+<span style="flex:none;width:52px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">Subject</span>
+<input class="input" value="{{ composeSubject }}" onChange="{{ onComposeSubject }}" style="border:0;background:transparent;padding:0;min-height:22px;font-family:var(--font-heading);font-weight:600">
+</div>
+<div style="display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--color-divider);flex-wrap:wrap;background:var(--color-surface)">
+<span class="tag tag-accent">{{ draftLabel }}</span>
+<span class="tag tag-neutral">CV_Backend_v3.pdf</span>
+<span class="tag tag-outline">Tone: formal</span>
+</div>
+<textarea class="input" value="{{ composeBody }}" onChange="{{ onComposeBody }}" style="border:0;background:transparent;padding:16px;min-height:340px;font-size:13.5px;line-height:1.6;resize:none"></textarea>
+<div style="padding:0 16px 40px;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:11px;line-height:1.5;color:var(--color-neutral-700);border-left:2px solid var(--color-accent);padding-left:10px">Text in [square brackets] came from the posting screenshot and your CV. Tap any bracket to swap the wording before sending.</div>
+<div style="display:flex;gap:8px">
+<button class="btn btn-secondary" onClick="{{ regenerate }}" style="flex:1;justify-content:flex-start">Regenerate</button>
+<button class="btn btn-secondary" onClick="{{ goCvBank }}" style="flex:1;justify-content:flex-start">Change CV</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAddJob }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ back }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:16px">Add job</div>
+<div style="margin-left:auto;font-size:11px;letter-spacing:.08em;color:var(--color-neutral-700)">{{ jobStepLabel }}</div>
+</div>
+
+<sc-if value="{{ jobCapture }}">
+<div class="cm-scroll" style="flex:1;overflow-y:auto;padding:18px 16px 40px;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;line-height:1.5;color:var(--color-neutral-700)">Drop the LinkedIn or WhatsApp screenshot. The reader pulls out company, role, requirements and deadline. Or type the posting in yourself.</div>
+<button onClick="{{ runOcr }}" style="border:2px dashed var(--color-divider);border-radius:var(--radius-lg);background:var(--color-surface);padding:34px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;cursor:pointer;text-align:left;width:100%">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:17px">Upload posting screenshot</span>
+<span style="font-size:12px;color:var(--color-neutral-700)">PNG or JPG · camera roll, camera, or paste</span>
+</button>
+<div style="display:flex;align-items:center;gap:10px"><span style="height:1px;flex:1;background:var(--color-divider)"></span><span style="font-size:11px;letter-spacing:.1em;color:var(--color-neutral-700)">OR</span><span style="height:1px;flex:1;background:var(--color-divider)"></span></div>
+<div class="field"><label>Paste the job text</label><textarea class="input" value="{{ jobText }}" onChange="{{ onJobText }}" placeholder="Paste the posting here" style="min-height:130px;font-size:13px"></textarea></div>
+<button class="btn btn-primary btn-block" onClick="{{ runOcr }}" style="min-height:46px;font-size:15px">Generate</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ jobReading }}">
+<div style="flex:1;padding:22px 16px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:10px">
+<span style="width:10px;height:10px;background:var(--color-accent);animation:cmShimmer 1s infinite"></span>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:17px">Reading the screenshot</span>
+</div>
+<div style="border:1px solid var(--color-divider);background:var(--color-surface);padding:14px;display:flex;flex-direction:column;gap:9px">
+<div style="height:13px;width:62%;background:var(--color-neutral-300);animation:cmShimmer 1.1s infinite"></div>
+<div style="height:10px;width:88%;background:var(--color-neutral-300);animation:cmShimmer 1.1s .15s infinite"></div>
+<div style="height:10px;width:74%;background:var(--color-neutral-300);animation:cmShimmer 1.1s .3s infinite"></div>
+<div style="height:10px;width:91%;background:var(--color-neutral-300);animation:cmShimmer 1.1s .45s infinite"></div>
+<div style="height:10px;width:46%;background:var(--color-neutral-300);animation:cmShimmer 1.1s .6s infinite"></div>
+</div>
+<div style="font-size:12px;color:var(--color-neutral-700);line-height:1.5">Finding company · role · seniority · requirements · deadline</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ jobConfirm }}">
+<div class="cm-scroll" style="flex:1;overflow-y:auto;padding:16px 16px 40px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:12px;align-items:flex-start">
+<div style="flex:none;width:76px;height:100px;border:1px solid var(--color-divider);background:var(--color-surface);display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.06em;color:var(--color-neutral-700);text-align:center;line-height:1.3" class="grayscale">SCREEN<br>SHOT</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700)">Read with 94% confidence</div>
+<div style="font-size:12px;line-height:1.5;color:var(--color-neutral-700);margin-top:6px">Check the fields below. Anything you correct here also corrects the mail draft.</div>
+</div>
+</div>
+<div class="hr" style="margin:2px 0"></div>
+<div class="field"><label>Company</label><input class="input" value="Xendit" readonly=""></div>
+<div class="field"><label>Role / job desk</label><input class="input" value="Senior Backend Engineer" readonly=""></div>
+<div style="display:flex;gap:10px">
+<div class="field" style="flex:1"><label>Location</label><input class="input" value="Jakarta · Hybrid" readonly=""></div>
+<div class="field" style="flex:1"><label>Deadline</label><input class="input" value="24 Sep 2026" readonly=""></div>
+</div>
+<div>
+<div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">Requirements it picked up</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span class="tag tag-accent">Go</span><span class="tag tag-accent">PostgreSQL</span><span class="tag tag-accent">Kafka</span><span class="tag tag-neutral">gRPC</span><span class="tag tag-neutral">5+ yrs</span><span class="tag tag-neutral">Payments domain</span>
+</div>
+</div>
+<div style="border-top:1px solid var(--color-divider);padding-top:14px;display:flex;flex-direction:column;gap:10px">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:13px">Use which CV as context?</div>
+<label class="radio"><input type="radio" name="usecv" checked=""><span class="dot"></span>CV_Backend_v3.pdf, match 91</label>
+<label class="radio"><input type="radio" name="usecv"><span class="dot"></span>CV_Platform_v1.pdf, match 74</label>
+<button class="btn btn-ghost" onClick="{{ goCvBank }}" style="padding-left:0;align-self:flex-start">Open CV Bank →</button>
+</div>
+<button class="btn btn-primary btn-block" onClick="{{ generateMail }}" style="min-height:46px;font-size:15px">Generate the mail</button>
+<button class="btn btn-secondary btn-block" onClick="{{ goMatch }}" style="min-height:44px">See match breakdown first</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCvBank }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:none;padding:14px 14px 12px;border-bottom:2px solid var(--color-divider)">
+<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--color-divider);background:var(--color-surface);padding:8px 10px;border-radius:var(--radius-md)">
+<button class="btn btn-icon" onClick="{{ openDrawer }}" aria-label="Menu" style="width:26px;height:26px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
+<input class="input" placeholder="Search CV files" style="border:0;background:transparent;min-height:26px;padding:0;font-size:14px">
+<button class="btn btn-icon" onClick="{{ goProfile }}" aria-label="Account" style="width:30px;height:30px;padding:0;background:transparent;border:0"><svg width="30" height="30" viewBox="20 14 566 566" style="display:block"><rect x="20" y="14" width="566" height="566" rx="62" fill="#0a66c2"></rect><rect x="152" y="155" width="94" height="283" rx="16" fill="#fff"></rect><rect x="256" y="155" width="94" height="188" rx="16" fill="#fff"></rect><rect x="360" y="155" width="94" height="283" rx="16" fill="#fff"></rect></svg></button>
+</div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:12px">
+<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">CV Bank, {{ cvCount }} files</span>
+<span style="font-size:11px;color:var(--color-accent-700)">{{ contextCount }} in AI context</span>
+</div>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto;position:relative">
+<sc-for list="{{ cvRows }}" as="c" hint-placeholder-count="4">
+<div onClick="{{ c.onOpen }}" class="cm-row" style="display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--color-divider);cursor:pointer;align-items:flex-start">
+<div style="flex:none;width:34px;height:44px;border:1px solid var(--color-divider);background:var(--color-surface);display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-size:8px;letter-spacing:.06em;color:var(--color-neutral-700)">{{ c.ext }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:var(--font-heading);font-weight:{{ c.w }};font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</div>
+<div style="font-size:11px;color:var(--color-neutral-700);margin-top:2px">Added {{ c.date }} · {{ c.pages }} · {{ c.skills }} skills read</div>
+<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+<span class="tag {{ c.tagCls }}" style="font-size:10px;letter-spacing:.08em">{{ c.tag }}</span>
+<span class="tag tag-neutral" style="font-size:10px">{{ c.usedLabel }}</span>
+</div>
+</div>
+<button onClick="{{ c.onToggle }}" aria-label="Toggle AI context" style="flex:none;width:26px;height:26px;margin-top:2px;cursor:pointer;border-radius:var(--radius-sm);border:2px solid {{ c.boxBorder }};background:{{ c.boxBg }};color:#fff;display:flex;align-items:center;justify-content:center;padding:0">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="opacity:{{ c.checkOpacity }}"><path d="M20 6L9 17l-5-5"></path></svg>
+</button>
+</div>
+</sc-for>
+<div style="padding:18px 16px 96px;font-size:11px;line-height:1.5;color:var(--color-neutral-700)">Checked files are read by the AI when it drafts mail or scores a posting. Uncheck an old CV to keep it out of the context without deleting it.</div>
+</div>
+<button class="btn btn-primary" onClick="{{ toast }}" aria-label="Upload CV" style="position:absolute;right:14px;bottom:70px;width:58px;height:58px;padding:0;border-radius:var(--radius-lg);justify-content:center;box-shadow:var(--shadow-md);z-index:20">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCvDetail }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ goCvBank }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="min-width:0">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ openCv.name }}</div>
+<div style="font-size:11px;color:var(--color-neutral-700)">Added {{ openCv.date }} · {{ openCv.pages }}</div>
+</div>
+<button class="btn btn-primary" onClick="{{ toast }}" style="margin-left:auto;justify-content:flex-start">Save</button>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto">
+<div style="display:flex;gap:14px;padding:16px;border-bottom:2px solid var(--color-divider)">
+<div class="grayscale" style="flex:none;width:96px;height:124px;border:1px solid var(--color-divider);background:var(--color-surface);padding:8px;display:flex;flex-direction:column;gap:5px">
+<div style="height:7px;width:70%;background:var(--color-neutral-500)"></div>
+<div style="height:4px;width:46%;background:var(--color-neutral-400)"></div>
+<div style="height:1px;background:var(--color-neutral-400);margin:3px 0"></div>
+<div style="height:4px;width:92%;background:var(--color-neutral-300)"></div>
+<div style="height:4px;width:84%;background:var(--color-neutral-300)"></div>
+<div style="height:4px;width:88%;background:var(--color-neutral-300)"></div>
+<div style="height:4px;width:60%;background:var(--color-neutral-300)"></div>
+<div style="height:1px;background:var(--color-neutral-400);margin:3px 0"></div>
+<div style="height:4px;width:76%;background:var(--color-neutral-300)"></div>
+<div style="height:4px;width:66%;background:var(--color-neutral-300)"></div>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700)">Read from the file</div>
+<div style="font-size:13px;line-height:1.5">4 roles, 18 skills and 2 certifications extracted. Text layer was clean, so nothing needed guessing.</div>
+<div style="display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--color-divider);padding-top:12px">
+<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-700)">Involve in AI context</div>
+<sc-for list="{{ ctxOptions }}" as="o" hint-placeholder-count="2">
+<label class="radio"><input type="radio" name="{{ o.group }}" checked="{{ o.checked }}" onChange="{{ o.onClick }}"><span class="dot"></span>{{ o.label }}</label>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="padding:16px;border-bottom:1px solid var(--color-divider)">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Skills</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span class="tag tag-accent">Go</span><span class="tag tag-accent">PostgreSQL</span><span class="tag tag-accent">Kafka</span><span class="tag tag-accent">Redis</span><span class="tag tag-neutral">Docker</span><span class="tag tag-neutral">Kubernetes</span><span class="tag tag-neutral">gRPC</span><span class="tag tag-neutral">Terraform</span><span class="tag tag-neutral">GraphQL</span><span class="tag tag-neutral">Python</span><span class="tag tag-neutral">CI/CD</span><span class="tag tag-outline">+7 more</span>
+</div>
+</div>
+<div style="padding:16px 16px 40px">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Experience</div>
+<sc-for list="{{ experience }}" as="e" hint-placeholder-count="3">
+<div style="display:flex;gap:12px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--color-divider)">
+<div style="flex:none;width:62px;font-size:11px;color:var(--color-neutral-700);line-height:1.4">{{ e.years }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:14px">{{ e.role }}</div>
+<div style="font-size:12px;color:var(--color-neutral-700)">{{ e.company }}</div>
+<div style="font-size:12px;line-height:1.5;margin-top:5px">{{ e.line }}</div>
+</div>
+</div>
+</sc-for>
+<button class="btn btn-secondary btn-block" onClick="{{ goImprove }}" style="min-height:44px">Improve this CV with AI</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMatch }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ back }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:16px">Match breakdown</div>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto">
+<div style="padding:18px 16px;border-bottom:2px solid var(--color-divider);display:flex;align-items:flex-end;gap:16px">
+<div>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:.82;letter-spacing:-.05em;color:var(--color-accent)">91</div>
+<div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:6px">Xendit · Sr Backend Engineer</div>
+</div>
+<div style="flex:1;font-size:12px;line-height:1.5;color:var(--color-neutral-700);padding-bottom:4px">Strong on the stack they name first. The gap is payments-domain wording, not skill.</div>
+</div>
+<div style="padding:16px">
+<sc-for list="{{ dimensions }}" as="d" hint-placeholder-count="4">
+<div style="padding:11px 0;border-bottom:1px solid var(--color-divider)">
+<div style="display:flex;align-items:baseline;gap:8px">
+<span style="font-size:13px;font-weight:600">{{ d.name }}</span>
+<span style="margin-left:auto;font-family:var(--font-heading);font-weight:800;font-size:13px;color:{{ d.fg }}">{{ d.pct }}</span>
+</div>
+<div style="height:6px;background:var(--color-neutral-300);margin-top:7px;position:relative">
+<div style="position:absolute;left:0;top:0;bottom:0;width:{{ d.pct }}%;background:{{ d.fg }}"></div>
+</div>
+<div style="font-size:11.5px;line-height:1.45;color:var(--color-neutral-700);margin-top:6px">{{ d.note }}</div>
+</div>
+</sc-for>
+</div>
+<div style="padding:4px 16px 16px">
+<div style="font-family:var(--font-heading);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Evidence</div>
+<sc-for list="{{ evidence }}" as="v" hint-placeholder-count="4">
+<div style="display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--color-divider)">
+<div style="flex:none;width:20px;height:20px;border-radius:var(--radius-sm);background:{{ v.iconBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:12px">{{ v.mark }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:600">{{ v.need }}</div>
+<div style="font-size:11.5px;line-height:1.45;color:var(--color-neutral-700);margin-top:3px;border-left:2px solid var(--color-divider);padding-left:8px">{{ v.proof }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="padding:4px 16px 40px;display:flex;flex-direction:column;gap:8px">
+<button class="btn btn-primary btn-block" onClick="{{ goImprove }}" style="min-height:46px;font-size:15px">Fix the 2 gaps in my CV</button>
+<button class="btn btn-secondary btn-block" onClick="{{ goCompose }}" style="min-height:44px">Draft the mail anyway</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isImprove }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px;border-bottom:2px solid var(--color-divider);flex:none">
+<button class="btn btn-icon" onClick="{{ back }}" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg></button>
+<div style="font-family:var(--font-heading);font-weight:800;font-size:16px">Suggested edits</div>
+<div style="margin-left:auto;font-size:11px;letter-spacing:.08em;color:var(--color-neutral-700)">{{ approvedCount }} / {{ suggestionCount }} APPROVED</div>
+</div>
+<div style="flex:none;padding:12px 16px;border-bottom:1px solid var(--color-divider);background:var(--color-surface);font-size:12px;line-height:1.5;color:var(--color-neutral-700)">Nothing is written to your CV until you approve it. Approving rewrites only the line shown.</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto;padding:0 0 110px">
+<sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="3">
+<div style="padding:16px;border-bottom:1px solid var(--color-divider)">
+<div style="display:flex;align-items:baseline;gap:8px">
+<span class="tag {{ s.tagCls }}" style="font-size:10px;letter-spacing:.08em">{{ s.tag }}</span>
+<span style="font-size:11px;color:var(--color-neutral-700)">{{ s.where }}</span>
+<span style="margin-left:auto;font-family:var(--font-heading);font-weight:800;font-size:11px;color:var(--color-accent-700)">{{ s.lift }}</span>
+</div>
+<div style="margin-top:11px;font-size:12.5px;line-height:1.5;color:var(--color-neutral-700);text-decoration:line-through;text-decoration-color:var(--color-neutral-400)">{{ s.before }}</div>
+<div style="margin-top:8px;font-size:13px;line-height:1.55;border-left:2px solid var(--color-accent);padding-left:10px">{{ s.after }}</div>
+<div style="display:flex;gap:8px;margin-top:13px">
+<button class="btn btn-primary" onClick="{{ s.onApprove }}" style="flex:1;justify-content:flex-start">{{ s.approveLabel }}</button>
+<button class="btn btn-secondary" onClick="{{ s.onSkip }}" style="flex:1;justify-content:flex-start">Skip</button>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px;border-top:2px solid var(--color-divider);background:var(--color-bg)">
+<button class="btn btn-primary btn-block" onClick="{{ applyEdits }}" style="min-height:48px;font-size:15px;margin-top:0">Save as CV_Backend_v4.pdf</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ navVisible }}">
+<div style="flex:none;display:flex;border-top:2px solid var(--color-divider);background:var(--color-bg)">
+<button onClick="{{ goInbox }}" style="flex:1;border:0;border-right:1px solid var(--color-divider);background:{{ tabInbox.bg }};color:{{ tabInbox.fg }};padding:10px 0 14px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;font-family:var(--font-heading);font-weight:800;font-size:10.5px;letter-spacing:.08em">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"></path></svg>INBOX
+</button>
+<button onClick="{{ goCvBank }}" style="flex:1;border:0;border-right:1px solid var(--color-divider);background:{{ tabCv.bg }};color:{{ tabCv.fg }};padding:10px 0 14px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;font-family:var(--font-heading);font-weight:800;font-size:10.5px;letter-spacing:.08em">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><path d="M14 2v6h6M9 15h6M9 11h3"></path></svg>CV BANK
+</button>
+<button onClick="{{ goMatch }}" style="flex:1;border:0;background:{{ tabInsights.bg }};color:{{ tabInsights.fg }};padding:10px 0 14px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;font-family:var(--font-heading);font-weight:800;font-size:10.5px;letter-spacing:.08em">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>INSIGHTS
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ drawer }}">
+<div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:rgba(45,43,43,.5);z-index:40"></div>
+<div style="position:absolute;left:0;top:0;bottom:0;width:284px;background:var(--color-bg);z-index:41;border-right:2px solid var(--color-divider);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)">
+<div style="padding:22px 18px 16px;border-bottom:2px solid var(--color-divider);background:var(--color-accent);color:#fff">
+<div style="display:flex;align-items:center;gap:10px"><svg width="30" height="30" viewBox="20 14 566 566" aria-label="CareerMate" style="flex:none;display:block"><rect x="20" y="14" width="566" height="566" rx="62" fill="#fff"></rect><rect x="152" y="155" width="94" height="283" rx="16" fill="#0a66c2"></rect><rect x="256" y="155" width="94" height="188" rx="16" fill="#0a66c2"></rect><rect x="360" y="155" width="94" height="283" rx="16" fill="#0a66c2"></rect></svg><div style="font-family:var(--font-heading);font-weight:800;font-size:22px;letter-spacing:-.02em">CAREERMATE</div></div>
+<div style="font-size:12px;margin-top:4px;opacity:.9">karim@gmail.com</div>
+</div>
+<div class="cm-scroll" style="flex:1;overflow-y:auto;padding:8px 0">
+<sc-for list="{{ labels }}" as="l" hint-placeholder-count="6">
+<button onClick="{{ l.onClick }}" style="width:100%;border:0;background:{{ l.bg }};color:{{ l.fg }};display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;font-family:var(--font-body);font-size:14px;text-align:left">
+<span style="width:10px;height:10px;flex:none;background:{{ l.dot }}"></span>
+<span style="flex:1">{{ l.name }}</span>
+<span style="font-family:var(--font-heading);font-weight:800;font-size:12px">{{ l.count }}</span>
+</button>
+</sc-for>
+<div class="hr" style="margin:10px 18px"></div>
+<button onClick="{{ goProfile }}" style="width:100%;border:0;background:transparent;display:flex;gap:12px;padding:13px 18px;cursor:pointer;font-family:var(--font-body);font-size:14px;text-align:left;color:var(--color-text)">Career profile</button>
+<button onClick="{{ goCvBank }}" style="width:100%;border:0;background:transparent;display:flex;gap:12px;padding:13px 18px;cursor:pointer;font-family:var(--font-body);font-size:14px;text-align:left;color:var(--color-text)">CV Bank</button>
+<button onClick="{{ goSignin }}" style="width:100%;border:0;background:transparent;display:flex;gap:12px;padding:13px 18px;cursor:pointer;font-family:var(--font-body);font-size:14px;text-align:left;color:var(--color-accent-700)">Sign out</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ toastText }}">
+<div style="position:absolute;left:14px;right:14px;bottom:{{ toastBottom }};z-index:60;background:var(--color-neutral-900);color:#fff;padding:13px 15px;border-radius:var(--radius-md);display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);animation:cmRise .18s ease-out">
+<span style="width:8px;height:8px;background:var(--color-accent-500);flex:none"></span>
+<span style="font-size:13px;flex:1">{{ toastText }}</span>
+<button class="btn btn-ghost" onClick="{{ hideToast }}" style="color:var(--color-accent-400)">OK</button>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-import>
+
+<sc-if value="{{ chrome }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap;max-width:402px">
+<sc-for list="{{ jumps }}" as="j" hint-placeholder-count="10">
+<button onClick="{{ j.onClick }}" style="border:1px solid var(--color-divider);background:{{ j.bg }};color:{{ j.fg }};padding:5px 9px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:var(--font-heading);font-weight:800">{{ j.label }}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ chrome }}" hint-placeholder-val="{{ true }}">
+<aside style="flex:none;width:352px;display:flex;flex-direction:column;gap:20px;padding-top:2px">
+<div>
+<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700);border-bottom:2px solid var(--color-divider);padding-bottom:7px">Design notes</div>
+<h4 style="font-size:19px;margin:14px 0 8px">Gmail's mechanics, Modernist's face</h4>
+<p style="font-size:13px;line-height:1.6;margin:0 0 10px">The mail metaphor is kept because the job is sending: one thread per company, a draft that becomes a sent message. CareerMate never reads the mailbox. Whether a company replied is a state you set by hand, on the row or in the thread. What changes is the skin: no pills, no circles, no soft cards. Rows are separated by hairlines, sections by 2px rules, and the accent, now LinkedIn blue rather than the system's red, is spent only on the primary action, the match number and the poster screens.</p>
+<p style="font-size:13px;line-height:1.6;margin:0">Monograms are squares, not avatars, and they double as the multi-select target, so selection never needs a long-press the user can't discover.</p>
+</div>
+<div>
+<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700);border-bottom:2px solid var(--color-divider);padding-bottom:7px">Patterns borrowed</div>
+<div style="display:flex;flex-direction:column;gap:0;margin-top:10px;font-size:12.5px">
+<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="flex:none;width:96px;color:var(--color-neutral-700)">Search</span><span style="flex:1">Pinned bar carrying the hamburger and account square</span></div>
+<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="flex:none;width:96px;color:var(--color-neutral-700)">Rows</span><span style="flex:1">Unread in Archivo 800, read drops to 400</span></div>
+<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="flex:none;width:96px;color:var(--color-neutral-700)">Swipe</span><span style="flex:1">Drag a row to archive left or mark replied right</span></div>
+<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="flex:none;width:96px;color:var(--color-neutral-700)">FAB</span><span style="flex:1">Two-way, screenshot capture or manual mail</span></div>
+<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="flex:none;width:96px;color:var(--color-neutral-700)">Drawer</span><span style="flex:1">Status labels replace Gmail folders</span></div>
+<div style="display:flex;gap:10px;padding:8px 0"><span style="flex:none;width:96px;color:var(--color-neutral-700)">Thread</span><span style="flex:1">Posting, AI draft, sent, plus a manual reply switch</span></div>
+</div>
+</div>
+<div>
+<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700);border-bottom:2px solid var(--color-divider);padding-bottom:7px">Added to your wireframe</div>
+<p style="font-size:13px;line-height:1.6;margin:10px 0 0">Your four screens are all here. Three more sit behind them: the match breakdown that explains the number, an approval list for AI edits to the CV, and the profile that gives every draft its standing context. Bracketed text in the mail draft is kept exactly as you specified.</p>
+</div>
+<div>
+<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700);border-bottom:2px solid var(--color-divider);padding-bottom:7px">Open for you to decide</div>
+<p style="font-size:13px;line-height:1.6;margin:10px 0 0">Corner softness is a tweak: Sharp is the design system's own 0px, Soft (5px, the current default) takes the edge off, Rounded (12px) goes fully Material. Row density, the device shell and match-score visibility sit in the same panel. Two bordered groups on the Add job and CV detail screens were dropped to single rules, so there are fewer boxes for the same structure.</p>
+</div>
+</aside>
+</sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;iOS&quot;,&quot;Android&quot;],&quot;default&quot;:&quot;iOS&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;corners&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sharp&quot;,&quot;Soft&quot;,&quot;Rounded&quot;],&quot;default&quot;:&quot;Soft&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;rowDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Compact&quot;,&quot;Comfortable&quot;,&quot;Rich&quot;],&quot;default&quot;:&quot;Comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Inbox&quot;},&quot;showMatchScore&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Inbox&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;signin&quot;,&quot;profile&quot;,&quot;inbox&quot;,&quot;thread&quot;,&quot;compose&quot;,&quot;addjob&quot;,&quot;cvbank&quot;,&quot;cvdetail&quot;,&quot;match&quot;,&quot;improve&quot;],&quot;default&quot;:&quot;inbox&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Frame&quot;}}">
+const ACCENT = 'var(--color-accent)';
+const INK = 'var(--color-text)';
+const MUTED = 'var(--color-neutral-700)';
+
+class Component extends DCLogic {
+  state = {
+    screen: this.props.startScreen || 'inbox', prev: 'inbox', drawer: false, fabOpen: false,
+    selectMode: false, selected: [], label: 'All', query: '',
+    swipeId: null, swipeDx: 0, dragging: false, startX: 0,
+    toastText: '', draftVersion: 'v2',
+    composeTo: 'careers@xendit.co',
+    composeSubject: 'Senior Backend Engineer, Muhammad Karim',
+    composeBody: 'Dear [Hiring Team at Xendit],\n\nI am applying for the [Senior Backend Engineer] role. Over the last [5 years] I have built [payment-adjacent services in Go and PostgreSQL], most recently [an idempotent ledger sync that cut reconciliation errors by 38%].\n\nThree things from your posting I have shipped directly:\n\n· [Go services at 8k rps behind gRPC]\n· [Kafka event pipelines with exactly-once delivery]\n· [Postgres partitioning for a 900M-row ledger]\n\nMy CV is attached as [CV_Backend_v3.pdf]. I am based in [Jakarta] and can start within [one month].\n\nThank you for your time,\nMuhammad Karim',
+    jobStep: 0, jobText: '', signinEmail: '',
+    profileStep: 0, tone: 'Formal and short',
+    profile: {
+      name: 'Muhammad Karim', headline: 'Backend engineer, 5 yrs, Go and PostgreSQL',
+      email: 'karim@gmail.com', notice: '1 month', salary: 'IDR 32 to 38 M / mo',
+      signoff: 'Thank you for your time, Muhammad Karim'
+    },
+    roles: { 'Backend Engineer': true, 'Platform Engineer': true, 'Site Reliability': false, 'Data Engineer': false, 'Solutions Architect': false, 'Engineering Lead': false },
+    openAppId: 3, openCvId: 1, openMsg: null,
+    apps: [
+      { id: 1, company: 'Tokopedia', role: 'Senior Backend Engineer', cv: 'CV_Backend_v3', snippet: 'Dear Hiring Team, I am applying for the Senior Backend Engineer role. Over the last five years…', date: 'Sep 14', score: 88, status: 'SENT', unread: false, location: 'Jakarta · Hybrid', level: 'Senior' },
+      { id: 2, company: 'Gojek', role: 'Platform Engineer', cv: 'CV_Platform_v1', snippet: 'Draft ready. Bracketed wording pulled from the posting screenshot. Review before sending.', date: 'Sep 13', score: 74, status: 'DRAFT', unread: true, location: 'Jakarta · Onsite', level: 'Mid–Senior' },
+      { id: 3, company: 'Xendit', role: 'Senior Backend Engineer', cv: 'CV_Backend_v3', snippet: 'Sent 11 Sep. You marked this as replied. Follow-up mail not written yet.', date: 'Sep 11', score: 91, status: 'REPLIED', unread: true, location: 'Jakarta · Hybrid', level: 'Senior' },
+      { id: 4, company: 'Traveloka', role: 'Backend Engineer', cv: 'CV_Backend_v2', snippet: 'Sent 12 days ago. No reply yet. Follow up or archive?', date: 'Sep 4', score: 66, status: 'NO RESPONSE', unread: false, location: 'Tangerang', level: 'Mid' },
+      { id: 5, company: 'eFishery', role: 'Data Platform Engineer', cv: 'CV_Backend_v3', snippet: 'Dear Recruitment Team, I am writing about the Data Platform Engineer opening in Bandung…', date: 'Sep 2', score: 79, status: 'SENT', unread: false, location: 'Bandung · Remote', level: 'Senior' },
+      { id: 6, company: 'Kredivo', role: 'Backend Engineer', cv: 'CV_Backend_v3', snippet: 'Draft ready. Deadline on the posting is 20 Sep, six days left.', date: 'Aug 28', score: 83, status: 'DRAFT', unread: true, location: 'Jakarta', level: 'Mid–Senior' },
+      { id: 7, company: 'Bukalapak', role: 'Site Reliability Engineer', cv: 'CV_Platform_v1', snippet: 'Sent 24 Aug. Marked as replied on 27 Aug.', date: 'Aug 24', score: 71, status: 'REPLIED', unread: false, location: 'Jakarta · Remote', level: 'Senior' }
+    ],
+    cvs: [
+      { id: 1, name: 'CV_Backend_v3.pdf', ext: 'PDF', date: '2 Sep 2026', pages: '2 pages', skills: 18, used: '4 applications', inContext: true, fresh: true },
+      { id: 2, name: 'CV_Platform_v1.pdf', ext: 'PDF', date: '18 Aug 2026', pages: '2 pages', skills: 15, used: '2 applications', inContext: true, fresh: false },
+      { id: 3, name: 'Karim_Resume_2024.docx', ext: 'DOC', date: '11 Mar 2025', pages: '1 page', skills: 11, used: '0 applications', inContext: false, fresh: false },
+      { id: 4, name: 'Portfolio_notes.pdf', ext: 'PDF', date: '4 Feb 2025', pages: '6 pages', skills: 7, used: '0 applications', inContext: false, fresh: false }
+    ],
+    suggestions: [
+      { id: 1, tag: 'GAP', where: 'Summary, line 1', lift: '+4 match', before: 'Backend engineer with experience in distributed systems and cloud infrastructure.', after: 'Backend engineer, 5 yrs, building payment and ledger services in Go on PostgreSQL and Kafka.', status: 'open' },
+      { id: 2, tag: 'KEYWORD', where: 'Xendit · Experience 2', lift: '+3 match', before: 'Worked on the transaction service and improved reliability.', after: 'Owned the transaction service: exactly-once Kafka consumers, idempotent retries, 99.98% monthly availability.', status: 'open' },
+      { id: 3, tag: 'EVIDENCE', where: 'Experience 1, bullet 3', lift: '+2 match', before: 'Reduced reconciliation issues significantly.', after: 'Cut reconciliation errors 38% by partitioning a 900M-row ledger and adding a nightly checksum job.', status: 'open' },
+      { id: 4, tag: 'TRIM', where: 'Skills', lift: 'clarity', before: 'Skills: Go, Python, Java, PHP, Node, React, Vue, Docker, K8s, AWS, GCP, MySQL, Redis…', after: 'Core: Go, PostgreSQL, Kafka, Redis, Kubernetes. Also: Python, Terraform, gRPC.', status: 'open' }
+    ]
+  };
+
+  componentDidUpdate(prev) {
+    if (prev.startScreen !== this.props.startScreen && this.props.startScreen) {
+      this.setState({ screen: this.props.startScreen });
+    }
+  }
+
+  go = (screen) => this.setState(s => ({ screen, prev: s.screen, drawer: false, fabOpen: false, selectMode: false, selected: [] }));
+  showToast = (t) => { this.setState({ toastText: t }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toastText: '' }), 2600); };
+
+  density() {
+    const d = this.props.rowDensity || 'Comfortable';
+    if (d === 'Compact') return { pad: '10px 14px', snippet: false };
+    if (d === 'Rich') return { pad: '16px 16px', snippet: true };
+    return { pad: '13px 15px', snippet: true };
+  }
+
+  filtered() {
+    const { apps, label, query } = this.state;
+    const q = query.trim().toLowerCase();
+    return apps.filter(a => {
+      if (label === 'Drafts' && a.status !== 'DRAFT') return false;
+      if (label === 'Sent' && a.status !== 'SENT') return false;
+      if (label === 'Replied' && a.status !== 'REPLIED') return false;
+      if (label === 'No response' && a.status !== 'NO RESPONSE') return false;
+      if (label === 'Archived') return false;
+      if (!q) return true;
+      return (a.company + ' ' + a.role + ' ' + a.cv).toLowerCase().includes(q);
+    });
+  }
+
+  tagFor(status) {
+    if (status === 'REPLIED') return 'tag-accent';
+    if (status === 'DRAFT') return 'tag-outline';
+    return 'tag-neutral';
+  }
+
+  onDown = (id) => (e) => {
+    e.currentTarget.setPointerCapture && e.currentTarget.setPointerCapture(e.pointerId);
+    this.setState({ swipeId: id, startX: e.clientX, swipeDx: 0, dragging: true });
+  };
+  onMove = (id) => (e) => {
+    if (!this.state.dragging || this.state.swipeId !== id) return;
+    const dx = e.clientX - this.state.startX;
+    if (Math.abs(dx) > 3) this.setState({ swipeDx: Math.max(-160, Math.min(160, dx)) });
+  };
+  onUp = (id) => () => {
+    const { swipeDx } = this.state;
+    if (swipeDx <= -84) {
+      this.setState(s => ({ apps: s.apps.filter(a => a.id !== id), dragging: false, swipeId: null, swipeDx: 0 }));
+      this.showToast('Archived. Undo?');
+    } else if (swipeDx >= 84) {
+      this.setState(s => ({ apps: s.apps.map(a => a.id === id ? { ...a, status: 'REPLIED', unread: false } : a), dragging: false, swipeId: null, swipeDx: 0 }));
+      this.showToast('Marked as replied');
+    } else {
+      this.setState({ dragging: false, swipeId: null, swipeDx: 0 });
+    }
+  };
+
+  openRow = (id) => () => {
+    if (Math.abs(this.state.swipeDx) > 6) return;
+    if (this.state.selectMode) return this.toggleSelect(id)();
+    this.setState(s => ({ openAppId: id, apps: s.apps.map(a => a.id === id ? { ...a, unread: false } : a) }));
+    this.go('thread');
+  };
+  toggleSelect = (id) => (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this.setState(s => {
+      const on = s.selected.includes(id);
+      const selected = on ? s.selected.filter(x => x !== id) : s.selected.concat(id);
+      return { selected, selectMode: selected.length > 0 };
+    });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const den = this.density();
+    const list = this.filtered();
+    const rawOpen = s.apps.find(a => a.id === s.openAppId) || s.apps[0] || {};
+    const openApp = { ...rawOpen, matchLabel: 'Match ' + rawOpen.score };
+    const openCv = s.cvs.find(c => c.id === s.openCvId) || s.cvs[0];
+    const counts = {
+      All: s.apps.length,
+      Drafts: s.apps.filter(a => a.status === 'DRAFT').length,
+      Sent: s.apps.filter(a => a.status === 'SENT').length,
+      Replied: s.apps.filter(a => a.status === 'REPLIED').length,
+      'No response': s.apps.filter(a => a.status === 'NO RESPONSE').length,
+      Archived: 3
+    };
+    const screenNames = {
+      signin: 'Sign in', profile: 'Career profile', inbox: 'Inbox', thread: 'Thread',
+      compose: 'Compose', addjob: 'Add job · OCR', cvbank: 'CV Bank', cvdetail: 'CV detail',
+      match: 'Match breakdown', improve: 'CV improvements'
+    };
+    const jumpList = ['signin', 'profile', 'inbox', 'thread', 'compose', 'addjob', 'cvbank', 'cvdetail', 'match', 'improve'];
+
+    const soft = this.props.corners || 'Soft';
+    const r = soft === 'Sharp' ? { sm: '0px', md: '0px', lg: '0px' }
+      : soft === 'Rounded' ? { sm: '8px', md: '12px', lg: '16px' }
+      : { sm: '3px', md: '5px', lg: '7px' };
+    const scoreColor = (n) => n >= 85 ? ACCENT : (n >= 75 ? 'var(--color-accent-700)' : MUTED);
+
+    return {
+      deviceComponent: (this.props.device === 'Android') ? 'AndroidDevice' : 'IOSDevice',
+      rootPad: (this.props.device === 'Android') ? '0px' : '54px 0px 22px',
+      rSm: r.sm, rMd: r.md, rLg: r.lg,
+      chrome: this.props.chrome !== false,
+      pagePad: this.props.chrome === false ? '0px' : '40px 44px',
+      pageMinH: this.props.chrome === false ? '0px' : '100vh',
+      screenLabel: screenNames[s.screen] || s.screen,
+      isSignin: s.screen === 'signin', isProfile: s.screen === 'profile',
+      isInbox: s.screen === 'inbox', isThread: s.screen === 'thread',
+      isCompose: s.screen === 'compose', isAddJob: s.screen === 'addjob',
+      isCvBank: s.screen === 'cvbank', isCvDetail: s.screen === 'cvdetail',
+      isMatch: s.screen === 'match', isImprove: s.screen === 'improve',
+      navVisible: s.screen === 'inbox' || s.screen === 'cvbank',
+      drawer: s.drawer, fabOpen: s.fabOpen,
+      selectMode: s.selectMode, notSelectMode: !s.selectMode,
+      selectedCount: s.selected.length,
+      query: s.query, labelName: s.label, visibleCount: list.length,
+      dateRange: 'Aug 24 to Sep 16',
+      showSnippet: den.snippet,
+      showScore: this.props.showMatchScore !== false,
+      signinEmail: s.signinEmail,
+      signinSteps: [
+        { n: '1', text: 'Drop in a screenshot of the job posting.' },
+        { n: '2', text: 'CareerMate matches it against your CV.' },
+        { n: '3', text: 'Review the draft, then send it yourself.' }
+      ],
+      draftVersion: s.draftVersion,
+      draftLabel: 'AI draft · ' + s.draftVersion,
+      composeTo: s.composeTo, composeSubject: s.composeSubject, composeBody: s.composeBody,
+      jobText: s.jobText,
+      jobCapture: s.jobStep === 0, jobReading: s.jobStep === 1, jobConfirm: s.jobStep === 2,
+      jobStepLabel: ['CAPTURE', 'READING', 'CONFIRM'][s.jobStep],
+      openApp, openCv,
+      ctxOptions: [
+        { label: 'Yes, use this CV', on: true },
+        { label: 'No, keep it out', on: false }
+      ].map(o => ({
+        label: o.label,
+        group: 'ctx-' + openCv.id,
+        checked: openCv.inContext === o.on,
+        onClick: () => this.setState(st => ({ cvs: st.cvs.map(x => x.id === openCv.id ? { ...x, inContext: o.on } : x) }))
+      })),
+      cvCount: s.cvs.length, contextCount: s.cvs.filter(c => c.inContext).length,
+      toastText: s.toastText,
+      toastBottom: (s.screen === 'inbox' || s.screen === 'cvbank') ? '140px' : '24px',
+
+      rows: list.map(a => {
+        const swiped = s.swipeId === a.id;
+        return {
+          ...a,
+          pad: den.pad,
+          tx: swiped ? 'translateX(' + s.swipeDx + 'px)' : 'translateX(0px)',
+          tr: swiped && s.dragging ? 'none' : 'transform .18s ease-out',
+          mono: a.company.slice(0, 2).toUpperCase(),
+          monoBg: s.selected.includes(a.id) ? ACCENT : (a.unread ? 'var(--color-neutral-900)' : 'var(--color-neutral-300)'),
+          monoFg: (s.selected.includes(a.id) || a.unread) ? '#fff' : INK,
+          w: a.unread ? 800 : 400,
+          w2: a.unread ? 600 : 400,
+          dw: a.unread ? 800 : 400,
+          dateFg: a.unread ? ACCENT : MUTED,
+          tagCls: this.tagFor(a.status),
+          scoreFg: scoreColor(a.score),
+          onDown: this.onDown(a.id), onMove: this.onMove(a.id), onUp: this.onUp(a.id),
+          onOpen: this.openRow(a.id), onSelect: this.toggleSelect(a.id)
+        };
+      }),
+
+      chips: ['All', 'Drafts', 'Replied', 'No response', 'Last 30 days'].map(label => ({
+        label,
+        cls: s.label === label ? 'tag-accent' : 'tag-neutral',
+        onClick: () => this.setState({ label: label === 'Last 30 days' ? s.label : label })
+      })),
+
+      labels: ['All', 'Drafts', 'Sent', 'Replied', 'No response', 'Archived'].map(name => ({
+        name, count: counts[name],
+        bg: s.label === name ? 'var(--color-accent-100)' : 'transparent',
+        fg: s.label === name ? 'var(--color-accent-800)' : INK,
+        dot: s.label === name ? ACCENT : 'var(--color-neutral-400)',
+        onClick: () => this.setState({ label: name, drawer: false, screen: 'inbox' })
+      })),
+
+      tabInbox: { bg: s.screen === 'inbox' ? 'var(--color-accent-100)' : 'transparent', fg: s.screen === 'inbox' ? 'var(--color-accent-800)' : MUTED },
+      tabCv: { bg: s.screen === 'cvbank' ? 'var(--color-accent-100)' : 'transparent', fg: s.screen === 'cvbank' ? 'var(--color-accent-800)' : MUTED },
+      tabInsights: { bg: s.screen === 'match' ? 'var(--color-accent-100)' : 'transparent', fg: s.screen === 'match' ? 'var(--color-accent-800)' : MUTED },
+
+      jumps: jumpList.map(k => ({
+        label: screenNames[k],
+        bg: s.screen === k ? ACCENT : 'var(--color-bg)',
+        fg: s.screen === k ? '#fff' : INK,
+        onClick: () => this.go(k)
+      })),
+
+      cvRows: s.cvs.map(c => ({
+        ...c,
+        usedLabel: 'Used in ' + c.used,
+        w: c.inContext ? 800 : 400,
+        tag: c.inContext ? 'IN AI CONTEXT' : 'EXCLUDED',
+        tagCls: c.inContext ? 'tag-accent' : 'tag-neutral',
+        boxBorder: c.inContext ? ACCENT : 'var(--color-neutral-400)',
+        boxBg: c.inContext ? ACCENT : 'transparent',
+        checkOpacity: c.inContext ? 1 : 0,
+        onToggle: (e) => { e.stopPropagation(); this.setState(st => ({ cvs: st.cvs.map(x => x.id === c.id ? { ...x, inContext: !x.inContext } : x) })); },
+        onOpen: () => { this.setState({ openCvId: c.id }); this.go('cvdetail'); }
+      })),
+
+      messages: [
+        { id: 'draft', from: 'CareerMate AI', kind: 'DRAFT', tagCls: 'tag-outline', date: 'Sep 9', body: 'Drafted from the posting screenshot and CV_Backend_v3. Nothing leaves the phone until you tap Send.' },
+        { id: 'sent', from: 'You', kind: 'SENT', tagCls: 'tag-neutral', date: 'Sep 9 · 10:14', body: 'Dear Hiring Team at Xendit,\n\nI am applying for the Senior Backend Engineer role. Over the last 5 years I have built payment-adjacent services in Go and PostgreSQL, most recently an idempotent ledger sync that cut reconciliation errors by 38%.\n\nCV attached: CV_Backend_v3.pdf.' }
+      ].map(m => ({
+        ...m,
+        expanded: s.openMsg === m.id,
+        toggleLabel: s.openMsg === m.id ? 'HIDE' : 'SHOW',
+        onToggle: () => this.setState(st => ({ openMsg: st.openMsg === m.id ? null : m.id }))
+      })),
+      replyStates: [
+        { key: 'NO RESPONSE', label: 'No response yet' },
+        { key: 'REPLIED', label: 'They replied' }
+      ].map(o => ({
+        ...o,
+        bg: rawOpen.status === o.key ? ACCENT : 'transparent',
+        fg: rawOpen.status === o.key ? '#fff' : INK,
+        onClick: () => this.setState(st => ({ apps: st.apps.map(a => a.id === st.openAppId ? { ...a, status: o.key } : a) }))
+      })),
+
+      experience: [
+        { years: '2024 to now', role: 'Backend Engineer', company: 'Xendit', line: 'Transaction service in Go: exactly-once Kafka consumers, idempotent retries, 99.98% availability.' },
+        { years: '2021 to 2024', role: 'Backend Engineer', company: 'Tokopedia', line: 'Ledger and reconciliation. Partitioned a 900M-row Postgres table; errors down 38%.' },
+        { years: '2019 to 2021', role: 'Software Engineer', company: 'Sirclo', line: 'Order APIs for 400 merchants. Moved deploys to Kubernetes with Terraform.' }
+      ],
+
+      dimensions: [
+        { name: 'Core skills', pct: 96, fg: ACCENT, note: 'Go, PostgreSQL, Kafka and Redis all named in the posting and all evidenced in the CV.' },
+        { name: 'Experience depth', pct: 88, fg: ACCENT, note: '5 years against the 5+ they ask for, at comparable scale.' },
+        { name: 'Domain language', pct: 61, fg: MUTED, note: 'Your CV says "transaction service"; the posting says "payments infrastructure". Same work, different words.' },
+        { name: 'Keywords in CV', pct: 74, fg: 'var(--color-accent-700)', note: 'gRPC and observability appear in the posting but not in your summary.' }
+      ],
+
+      evidence: [
+        { mark: '✓', iconBg: ACCENT, need: 'Go services at scale', proof: '"Transaction service in Go, 8k rps behind gRPC" from CV_Backend_v3, Experience 1' },
+        { mark: '✓', iconBg: ACCENT, need: 'Event streaming with Kafka', proof: '"Exactly-once Kafka consumers with idempotent retries" from Experience 1' },
+        { mark: '✓', iconBg: ACCENT, need: 'PostgreSQL at volume', proof: '"Partitioned a 900M-row ledger table" from Experience 2' },
+        { mark: '~', iconBg: 'var(--color-neutral-500)', need: 'Payments domain wording', proof: 'Not stated. The work qualifies; the CV never uses the word payments.' },
+        { mark: '~', iconBg: 'var(--color-neutral-500)', need: 'Observability ownership', proof: 'Not found in the CV. Add the on-call and tracing work if it was yours.' }
+      ],
+
+      suggestions: s.suggestions.map(x => ({
+        ...x,
+        tagCls: x.status === 'approved' ? 'tag-accent' : (x.tag === 'TRIM' ? 'tag-neutral' : 'tag-outline'),
+        tag: x.status === 'approved' ? 'APPROVED' : (x.status === 'skipped' ? 'SKIPPED' : x.tag),
+        approveLabel: x.status === 'approved' ? 'Approved' : 'Approve',
+        onApprove: () => this.setState(st => ({ suggestions: st.suggestions.map(y => y.id === x.id ? { ...y, status: 'approved' } : y) })),
+        onSkip: () => this.setState(st => ({ suggestions: st.suggestions.map(y => y.id === x.id ? { ...y, status: 'skipped' } : y) }))
+      })),
+      approvedCount: s.suggestions.filter(x => x.status === 'approved').length,
+      suggestionCount: s.suggestions.length,
+
+      openDrawer: () => this.setState({ drawer: true }),
+      closeDrawer: () => this.setState({ drawer: false }),
+      toggleFab: () => this.setState(st => ({ fabOpen: !st.fabOpen })),
+      closeFab: () => this.setState({ fabOpen: false }),
+      clearSelect: () => this.setState({ selectMode: false, selected: [] }),
+      archiveSelected: () => { this.setState(st => ({ apps: st.apps.filter(a => !st.selected.includes(a.id)), selected: [], selectMode: false })); this.showToast('Archived ' + s.selected.length + ' applications'); },
+      markSelectedReplied: () => { this.setState(st => ({ apps: st.apps.map(a => st.selected.includes(a.id) ? { ...a, status: 'REPLIED', unread: false } : a), selected: [], selectMode: false })); this.showToast('Marked as replied'); },
+      profileStepLabel: 'STEP ' + (s.profileStep + 1) + ' / 3',
+      profileStep1: s.profileStep === 0, profileStep2: s.profileStep === 1, profileStep3: s.profileStep === 2,
+      profile: s.profile,
+      profileRail: ['You', 'Your CV', 'Mail & terms'].map((name, i) => ({
+        name,
+        bg: i <= s.profileStep ? ACCENT : 'var(--color-neutral-300)',
+        fg: i === s.profileStep ? 'var(--color-accent-800)' : MUTED,
+        onClick: () => this.setState({ profileStep: i })
+      })),
+      profileBackLabel: s.profileStep === 0 ? 'Skip for now' : 'Back',
+      profileNextLabel: ['Next: your CV', 'Next: mail & terms', 'Save profile'][s.profileStep],
+      profileBack: () => s.profileStep === 0 ? this.go('inbox') : this.setState({ profileStep: s.profileStep - 1 }),
+      profileNext: () => {
+        if (s.profileStep < 2) return this.setState({ profileStep: s.profileStep + 1 });
+        this.go('inbox'); this.showToast('Profile saved. Drafts will use it from now on');
+      },
+      roleChips: Object.keys(s.roles).map(label => ({
+        label,
+        cls: s.roles[label] ? 'tag-accent' : 'tag-neutral',
+        bd: s.roles[label] ? 'var(--color-accent-300)' : 'var(--color-divider)',
+        onClick: () => this.setState(st => ({ roles: { ...st.roles, [label]: !st.roles[label] } }))
+      })),
+      toneOptions: [
+        { label: 'Formal and short', note: 'Three paragraphs, no adjectives. Safest for banks and enterprises.' },
+        { label: 'Warm and specific', note: 'Names one thing you admire about their product, then the evidence.' },
+        { label: 'Direct, bullet-led', note: 'Two lines, then three bullets of proof. Reads fast on a phone.' }
+      ].map(t => ({ ...t, checked: s.tone === t.label, onClick: () => this.setState({ tone: t.label }) })),
+      profileSummary: [
+        { k: 'Name', v: s.profile.name },
+        { k: 'Sends from', v: s.profile.email },
+        { k: 'Target roles', v: Object.keys(s.roles).filter(k => s.roles[k]).join(', ') || 'none yet' },
+        { k: 'Primary CV', v: 'CV_Backend_v3.pdf · 18 skills read' },
+        { k: 'Tone', v: s.tone },
+        { k: 'Availability', v: s.profile.notice + ' · ' + s.profile.salary }
+      ],
+      onProfileName: (e) => this.setState({ profile: { ...s.profile, name: e.target.value } }),
+      onProfileHeadline: (e) => this.setState({ profile: { ...s.profile, headline: e.target.value } }),
+      onProfileEmail: (e) => this.setState({ profile: { ...s.profile, email: e.target.value } }),
+      onProfileNotice: (e) => this.setState({ profile: { ...s.profile, notice: e.target.value } }),
+      onProfileSalary: (e) => this.setState({ profile: { ...s.profile, salary: e.target.value } }),
+      onProfileSignoff: (e) => this.setState({ profile: { ...s.profile, signoff: e.target.value } }),
+      uploadProfileCv: () => this.showToast('CV_Backend_v3.pdf read, 18 skills found'),
+      goInbox: () => this.go('inbox'),
+      goProfile: () => { this.setState({ profileStep: 0 }); this.go('profile'); },
+      goSignin: () => this.go('signin'),
+      goCvBank: () => this.go('cvbank'),
+      goMatch: () => this.go('match'),
+      goImprove: () => this.go('improve'),
+      goCompose: () => this.go('compose'),
+      goAddJob: () => { this.setState({ jobStep: 0 }); this.go('addjob'); },
+      back: () => this.go(s.prev === s.screen ? 'inbox' : s.prev),
+      archiveOpen: () => { this.setState(st => ({ apps: st.apps.filter(a => a.id !== st.openAppId) })); this.go('inbox'); this.showToast('Archived. Undo?'); },
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      onSigninEmail: (e) => this.setState({ signinEmail: e.target.value }),
+      onJobText: (e) => this.setState({ jobText: e.target.value }),
+      onComposeTo: (e) => this.setState({ composeTo: e.target.value }),
+      onComposeSubject: (e) => this.setState({ composeSubject: e.target.value }),
+      onComposeBody: (e) => this.setState({ composeBody: e.target.value }),
+      runOcr: () => { this.setState({ jobStep: 1 }); setTimeout(() => this.setState({ jobStep: 2 }), 1700); },
+      generateMail: () => { this.go('compose'); this.showToast('Draft written from the screenshot'); },
+      regenerate: () => { this.setState({ draftVersion: 'v3' }); this.showToast('Redrafted as v3'); },
+      send: () => { this.go('inbox'); this.showToast('Sent to ' + s.composeTo); },
+      applyEdits: () => { this.go('cvbank'); this.showToast('Saved CV_Backend_v4.pdf'); },
+      toast: () => this.showToast('Upload sheet would open here'),
+      hideToast: () => this.setState({ toastText: '' })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

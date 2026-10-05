@@ -1,0 +1,18 @@
+# Duplicate archive of "CareerMate Mobile App Design/"
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.iml
+
+# Flutter / Dart (for when the app code is added)
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+local.properties
+Pods/

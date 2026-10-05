@@ -1,8 +1,11 @@
+﻿import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/cm_theme.dart';
+import '../../../app/toast/toast_controller.dart';
 import '../../../ui/atoms/cm_button.dart';
+import '../../../ui/atoms/cm_checkbox.dart';
 import '../../../ui/atoms/cm_logo.dart';
 import '../../../ui/molecules/cm_step_badge.dart';
 import '../controller/auth_controller.dart';
@@ -14,12 +17,29 @@ const _steps = [
   'Review the draft, then send it yourself.',
 ];
 
-/// Full accent field, then a white panel with the one way in: Google.
-class SignInPage extends ConsumerWidget {
+/// Full accent field, then a white panel with the one way in: Google, once the
+/// privacy policy is agreed to.
+class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends ConsumerState<SignInPage> {
+  bool _agreed = false;
+  late final TapGestureRecognizer _policyTap = TapGestureRecognizer()
+    // TODO(privacy): open the real policy once it is published.
+    ..onTap = () => ref.read(toastProvider.notifier).show('Privacy policy would open here');
+
+  @override
+  void dispose() {
+    _policyTap.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cm = context.cm;
     final c = cm.colors;
     const white = Color(0xFFFFFFFF);
@@ -33,66 +53,71 @@ class SignInPage extends ConsumerWidget {
           Expanded(
             child: SafeArea(
               bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 30, 24, 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 22,
-                  children: [
-                    Column(
+              child: LayoutBuilder(
+                builder: (context, box) => SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 30, 24, 0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: box.maxHeight - 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 22,
                       children: [
-                        Row(
-                          spacing: 16,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const CmLogo(size: 96, inverse: true),
-                            Text(
-                              'CAREER\nMATE',
-                              style: cm.heading(size: 52, color: white, height: 0.94, tracking: -0.035),
+                            Row(
+                              spacing: 16,
+                              children: [
+                                const CmLogo(size: 96, inverse: true),
+                                Text(
+                                  'CAREER\nMATE',
+                                  style: cm.heading(size: 52, color: white, height: 0.94, tracking: -0.035),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: 120,
+                              height: 2,
+                              margin: const EdgeInsets.fromLTRB(0, 22, 0, 18),
+                              color: white.withValues(alpha: 0.9),
+                            ),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 280),
+                              child: Text(
+                                'Read the posting. Match your CV. Send the mail.',
+                                style: cm.body(size: 17, weight: FontWeight.w600, color: white, height: 1.4),
+                              ),
                             ),
                           ],
                         ),
-                        Container(
-                          width: 120,
-                          height: 2,
-                          margin: const EdgeInsets.fromLTRB(0, 22, 0, 18),
-                          color: white.withValues(alpha: 0.9),
-                        ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 280),
-                          child: Text(
-                            'Read the posting. Match your CV. Send the mail.',
-                            style: cm.body(size: 17, weight: FontWeight.w600, color: white, height: 1.4),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 11,
+                            children: [
+                              for (var i = 0; i < _steps.length; i++)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  spacing: 11,
+                                  children: [
+                                    CmStepBadge('${i + 1}'),
+                                    Expanded(
+                                      child: Text(
+                                        _steps[i],
+                                        style: cm.body(size: 14, color: white, height: 1.45),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 11,
-                        children: [
-                          for (var i = 0; i < _steps.length; i++)
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.baseline,
-                              textBaseline: TextBaseline.alphabetic,
-                              spacing: 11,
-                              children: [
-                                CmStepBadge('${i + 1}'),
-                                Expanded(
-                                  child: Text(
-                                    _steps[i],
-                                    style: cm.body(size: 14, color: white, height: 1.45),
-                                  ),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -109,8 +134,44 @@ class SignInPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 14,
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 12,
+                  children: [
+                    CmCheckbox(
+                      checked: _agreed,
+                      label: 'Agree to the Privacy Policy',
+                      onChanged: (v) => setState(() => _agreed = v),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => setState(() => _agreed = !_agreed),
+                        child: Text.rich(
+                          TextSpan(
+                            text: 'I have read and agree to the ',
+                            children: [
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                recognizer: _policyTap,
+                                style: cm.body(
+                                  size: 12.5,
+                                  weight: FontWeight.w800,
+                                  color: c.accent700,
+                                ).copyWith(decoration: TextDecoration.underline),
+                              ),
+                            ],
+                          ),
+                          style: cm.body(size: 12.5, color: c.neutral800, height: 1.4),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 _GoogleButton(
-                  onPressed: signingIn ? null : () => ref.read(authControllerProvider.notifier).signIn(),
+                  onPressed: signingIn || !_agreed
+                      ? null
+                      : () => ref.read(authControllerProvider.notifier).signIn(),
                 ),
                 Text(
                   'Mail is sent from your own Google account, so Google is the only way in.',

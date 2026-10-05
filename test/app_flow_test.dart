@@ -23,6 +23,8 @@ Future<void> _settle(WidgetTester tester, [int ms = 600]) async {
 
 /// Signs in with the mock Google account and skips the profile flow.
 Future<void> _toInbox(WidgetTester tester) async {
+  await tester.tap(find.bySemanticsLabel('Agree to the Privacy Policy'));
+  await tester.pump();
   await tester.tap(find.text('Continue with Google'));
   await _settle(tester);
   expect(find.text('Career profile'), findsOneWidget);
@@ -39,6 +41,40 @@ void main() {
     expect(find.text('ALL, 7 APPLICATIONS'), findsOneWidget);
     expect(find.text('Tokopedia'), findsOneWidget);
     expect(find.text('INBOX'), findsOneWidget);
+  });
+
+  testWidgets('Google sign-in stays off until the privacy policy is agreed to', (tester) async {
+    await _pumpApp(tester);
+
+    await tester.tap(find.text('Continue with Google'));
+    await _settle(tester);
+    expect(find.text('Continue with Google'), findsOneWidget);
+    expect(find.text('Career profile'), findsNothing);
+
+    await tester.tap(find.bySemanticsLabel('Agree to the Privacy Policy'));
+    await tester.pump();
+    await tester.tap(find.text('Continue with Google'));
+    await _settle(tester);
+    expect(find.text('Career profile'), findsOneWidget);
+  });
+
+  testWidgets('the profile footer stays on screen on a short window', (tester) async {
+    await _pumpApp(tester);
+    tester.view.physicalSize = const Size(804, 900);
+
+    await tester.tap(find.bySemanticsLabel('Agree to the Privacy Policy'));
+    await tester.pump();
+    await tester.tap(find.text('Continue with Google'));
+    await _settle(tester);
+
+    await tester.tap(find.text('Next: your CV'));
+    await _settle(tester);
+    await tester.tap(find.text('Next: mail & terms'));
+    await _settle(tester);
+
+    // The last step is far taller than 450 logical px, yet Save is not scrolled away.
+    final save = tester.getRect(find.text('Save profile'));
+    expect(save.bottom, lessThanOrEqualTo(450));
   });
 
   testWidgets('a status chip filters the list', (tester) async {
@@ -85,7 +121,7 @@ void main() {
 
     await tester.tap(find.text('INSIGHTS'));
     await _settle(tester, 900);
-    expect(find.text('EVIDENCE'), findsOneWidget);
+    expect(find.text('Evidence'), findsOneWidget);
     expect(find.text('INBOX'), findsOneWidget);
     expect(find.text('CV BANK'), findsOneWidget);
 

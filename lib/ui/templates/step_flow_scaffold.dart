@@ -7,8 +7,8 @@ import '../atoms/cm_icon_button.dart';
 import '../atoms/cm_pressable.dart';
 
 /// Multi-step flow: back bar with step counter, a segmented progress rail
-/// (tap a step name to jump), scrolling [children], and Back / Next pinned at
-/// the bottom of the content.
+/// (tap a step name to jump), scrolling [children], and Back / Next in a footer
+/// that stays put however long the step is.
 class StepFlowScaffold extends StatelessWidget {
   const StepFlowScaffold({
     super.key,
@@ -106,38 +106,32 @@ class StepFlowScaffold extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 18,
-                        children: [
-                          ...children,
-                          const Spacer(),
-                          Row(
-                            spacing: 10,
-                            children: [
-                              Expanded(
-                                child: CmButton(
-                                  label: backLabel,
-                                  variant: CmButtonVariant.secondary,
-                                  expand: true,
-                                  onPressed: onBack,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: CmButton(label: nextLabel, expand: true, onPressed: onNext),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 18,
+                  children: children,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+              decoration: BoxDecoration(color: c.bg, border: Border(top: cm.hairline)),
+              child: Row(
+                spacing: 10,
+                children: [
+                  Expanded(
+                    child: CmButton(
+                      label: backLabel,
+                      variant: CmButtonVariant.secondary,
+                      expand: true,
+                      onPressed: onBack,
                     ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: CmButton(label: nextLabel, expand: true, onPressed: onNext),
                   ),
                 ],
               ),

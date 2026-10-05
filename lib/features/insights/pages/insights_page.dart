@@ -21,7 +21,8 @@ class InsightsPage extends ConsumerWidget {
     final id = ref.watch(insightsTargetProvider);
 
     return TabScaffold(
-      header: TabHeader(
+      header: Padding(
+        padding: const EdgeInsets.fromLTRB(14, 14, 14, 8),
         child: Row(
           spacing: 10,
           children: [

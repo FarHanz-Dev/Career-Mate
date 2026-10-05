@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/cm_theme.dart';
 import '../../../core/utils/date_format.dart';
 import '../../../ui/atoms/cm_button.dart';
-import '../../../ui/atoms/cm_label.dart';
 import '../../../ui/organisms/dimension_bar.dart';
 import '../../../ui/organisms/evidence_list.dart';
 import '../../../ui/templates/detail_scaffold.dart';
@@ -64,81 +63,67 @@ class _MatchBody extends ConsumerWidget {
     final primaryCv = ref.watch(primaryCvProvider);
 
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          decoration: BoxDecoration(border: Border(bottom: cm.rule)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            spacing: 16,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${match.score}',
-                    style: cm.heading(size: 76, color: c.accent, height: 0.82, tracking: -0.05),
-                  ),
-                  const SizedBox(height: 6),
-                  CmLabel('${match.company} · ${match.role.replaceFirst('Senior', 'Sr')}'),
-                ],
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    match.summary,
-                    style: cm.body(size: 12, color: c.neutral700, height: 1.5),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        Text(
+          '${match.company} · ${match.role.replaceFirst('Senior', 'Sr')}',
+          style: cm.body(size: 13, color: c.neutral700),
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              for (final d in match.dimensions)
-                DimensionBar(name: d.name, percent: d.pct, note: d.note),
-            ],
-          ),
+        const SizedBox(height: 6),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          spacing: 8,
+          children: [
+            Text(
+              '${match.score}',
+              style: cm.heading(size: 72, color: c.accent, height: 1, tracking: -0.04),
+            ),
+            Text('match', style: cm.body(size: 15, color: c.neutral700)),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('EVIDENCE', style: cm.heading(size: 13, tracking: 0.06)),
-              const SizedBox(height: 12),
-              for (final e in match.evidence) EvidenceItem(need: e.need, proof: e.proof, met: e.met),
-            ],
-          ),
+        const SizedBox(height: 10),
+        Text(match.summary, style: cm.body(size: 14, color: c.neutral800, height: 1.5)),
+        const SizedBox(height: 32),
+        Text('How it matches', style: cm.heading(size: 16)),
+        const SizedBox(height: 18),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 20,
+          children: [
+            for (final d in match.dimensions)
+              DimensionBar(name: d.name, percent: d.pct, note: d.note),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 8,
-            children: [
-              if (match.gapCount > 0 && primaryCv != null)
-                CmButton(
-                  label: 'Fix the ${plural(match.gapCount, 'gap')} in my CV',
-                  expand: true,
-                  minHeight: 46,
-                  fontSize: 15,
-                  onPressed: () => context.push('/improve/${primaryCv.id}'),
-                ),
-              CmButton(
-                label: 'Draft the mail anyway',
-                variant: CmButtonVariant.secondary,
-                expand: true,
-                minHeight: 44,
-                onPressed: () => context.push('/compose?application=${match.applicationId}'),
-              ),
-            ],
+        const SizedBox(height: 36),
+        Text('Evidence', style: cm.heading(size: 16)),
+        const SizedBox(height: 18),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 18,
+          children: [
+            for (final e in match.evidence) EvidenceItem(need: e.need, proof: e.proof, met: e.met),
+          ],
+        ),
+        const SizedBox(height: 32),
+        if (match.gapCount > 0 && primaryCv != null) ...[
+          CmButton(
+            label: 'Fix the ${plural(match.gapCount, 'gap')} in my CV',
+            expand: true,
+            minHeight: 48,
+            fontSize: 15,
+            alignment: MainAxisAlignment.center,
+            onPressed: () => context.push('/improve/${primaryCv.id}'),
           ),
+          const SizedBox(height: 4),
+        ],
+        CmButton(
+          label: 'Draft the mail anyway',
+          variant: CmButtonVariant.ghost,
+          expand: true,
+          minHeight: 44,
+          alignment: MainAxisAlignment.center,
+          onPressed: () => context.push('/compose?application=${match.applicationId}'),
         ),
       ],
     );

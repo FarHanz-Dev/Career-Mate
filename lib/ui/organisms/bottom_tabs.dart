@@ -4,8 +4,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../app/theme/cm_theme.dart';
 import '../atoms/cm_pressable.dart';
 
-/// Inbox / CV Bank / Insights. Icon plus title only. The active tab is
-/// accent-100 with accent-800 content.
+/// Inbox / CV Bank / Insights. Icon plus title only, and no frame: no rule
+/// above, no dividers, no fill. The active tab is only accent-coloured.
 class BottomTabs extends StatelessWidget {
   const BottomTabs({super.key, required this.selectedIndex, required this.onSelected});
 
@@ -25,8 +25,8 @@ class BottomTabs extends StatelessWidget {
     final c = cm.colors;
     final safeBottom = MediaQuery.viewPaddingOf(context).bottom;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(color: c.bg, border: Border(top: cm.rule)),
+    return ColoredBox(
+      color: c.bg,
       child: Padding(
         padding: EdgeInsets.only(bottom: safeBottom),
         child: Row(
@@ -38,23 +38,22 @@ class BottomTabs extends StatelessWidget {
                   semanticLabel: _items[i].$2,
                   builder: (context, pressed) {
                     final active = selectedIndex == i;
-                    final fg = active ? c.accent800 : c.neutral700;
-                    return Container(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 14),
-                      decoration: BoxDecoration(
-                        color: active ? c.accent100 : (pressed ? c.surface : null),
-                        border: i < _items.length - 1 ? Border(right: cm.hairline) : null,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 5,
-                        children: [
-                          Icon(_items[i].$1, size: 21, color: fg),
-                          Text(
-                            _items[i].$2.toUpperCase(),
-                            style: cm.heading(size: 10.5, color: fg, tracking: 0.08, height: CmTheme.natural),
-                          ),
-                        ],
+                    final fg = active ? c.accent : c.neutral700;
+                    return Opacity(
+                      opacity: pressed ? 0.5 : 1,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 14),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 5,
+                          children: [
+                            Icon(_items[i].$1, size: 21, color: fg),
+                            Text(
+                              _items[i].$2.toUpperCase(),
+                              style: cm.heading(size: 10.5, color: fg, tracking: 0.08, height: CmTheme.natural),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

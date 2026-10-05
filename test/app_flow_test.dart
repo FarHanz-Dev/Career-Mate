@@ -1,4 +1,5 @@
 import 'package:careermate/app/app.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,6 +77,62 @@ void main() {
     // Let the toast time out so no timer is left pending.
     await _settle(tester, 3000);
     expect(find.text('Marked as replied'), findsNothing);
+  });
+
+  testWidgets('the Insights tab shows the match breakdown with the bottom tabs still there', (tester) async {
+    await _pumpApp(tester);
+    await _toInbox(tester);
+
+    await tester.tap(find.text('INSIGHTS'));
+    await _settle(tester, 900);
+    expect(find.text('EVIDENCE'), findsOneWidget);
+    expect(find.text('INBOX'), findsOneWidget);
+    expect(find.text('CV BANK'), findsOneWidget);
+
+    // And the way back to the inbox is still one tap.
+    await tester.tap(find.text('INBOX'));
+    await _settle(tester);
+    expect(find.text('ALL, 7 APPLICATIONS'), findsOneWidget);
+  });
+
+  testWidgets('pages swap with no transition and a light haptic tick', (tester) async {
+    final haptics = <Object?>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      if (call.method == 'HapticFeedback.vibrate') haptics.add(call.arguments);
+      return null;
+    });
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+
+    await _pumpApp(tester);
+    await _toInbox(tester);
+    haptics.clear();
+
+    // Switching tab ticks once; tapping the tab you are on stays silent.
+    await tester.tap(find.text('CV BANK'));
+    await _settle(tester);
+    expect(haptics, ['HapticFeedbackType.selectionClick']);
+    await tester.tap(find.text('CV BANK'));
+    await _settle(tester);
+    expect(haptics, hasLength(1));
+    await tester.tap(find.text('INBOX'));
+    await _settle(tester);
+    haptics.clear();
+
+    // A pushed screen has no in or out animation, and ticks on the way in and out.
+    await tester.tap(find.text('Xendit'));
+    await tester.pump();
+    final route = ModalRoute.of(tester.element(find.text('REPLY STATUS, YOU SET THIS')))!;
+    expect(route.transitionDuration, Duration.zero);
+    expect(route.reverseTransitionDuration, Duration.zero);
+    expect(haptics, hasLength(1));
+
+    await tester.tap(find.bySemanticsLabel('Back'));
+    await tester.pump();
+    expect(find.text('REPLY STATUS, YOU SET THIS'), findsNothing);
+    expect(find.text('ALL, 7 APPLICATIONS'), findsOneWidget);
+    expect(haptics, hasLength(2));
   });
 
   testWidgets('opening a row shows the thread with the reply toggle', (tester) async {

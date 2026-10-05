@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/controller/auth_controller.dart';
 import '../features/inbox/controller/inbox_controller.dart';
 import '../features/inbox/models/inbox_label.dart';
-import '../features/insights/controller/match_controller.dart';
 import '../ui/organisms/bottom_tabs.dart';
 import '../ui/organisms/label_drawer.dart';
 import 'theme/cm_theme.dart';
 
-/// Frame for the two tab screens (Inbox, CV Bank): the label drawer and the
-/// bottom tabs. Insights is a tab too, but it opens the match breakdown as a
-/// full screen, so the tabs are hidden there.
-class AppShell extends ConsumerWidget {
+/// Frame for the three tab screens (Inbox, CV Bank, Insights): the label
+/// drawer and the bottom tabs.
+class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   static const inboxBranch = 0;
   static const cvBankBranch = 1;
-  static const insightsTab = 2;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.cm.colors.bg,
       drawer: _ShellDrawer(navigationShell: navigationShell),
@@ -33,17 +31,18 @@ class AppShell extends ConsumerWidget {
       body: navigationShell,
       bottomNavigationBar: BottomTabs(
         selectedIndex: navigationShell.currentIndex,
-        onSelected: (i) {
-          if (i == insightsTab) {
-            final id = ref.read(insightsTargetProvider);
-            if (id != null) context.push('/match/$id');
-            return;
-          }
-          navigationShell.goBranch(i, initialLocation: i == navigationShell.currentIndex);
-        },
+        onSelected: (i) => _switchTab(navigationShell, i),
       ),
     );
   }
+}
+
+/// Tabs swap with no animation, so a light tick confirms the switch. Tapping
+/// the tab you are already on resets it and stays silent.
+void _switchTab(StatefulNavigationShell shell, int index) {
+  final same = index == shell.currentIndex;
+  if (!same) HapticFeedback.selectionClick();
+  shell.goBranch(index, initialLocation: same);
 }
 
 class _ShellDrawer extends ConsumerWidget {
@@ -78,7 +77,7 @@ class _ShellDrawer extends ConsumerWidget {
             InboxLabel.values.firstWhere((l) => l.title == name),
           );
           close();
-          shell.goBranch(AppShell.inboxBranch);
+          _switchTab(shell, AppShell.inboxBranch);
         },
         onProfile: () {
           close();
@@ -86,7 +85,7 @@ class _ShellDrawer extends ConsumerWidget {
         },
         onCvBank: () {
           close();
-          shell.goBranch(AppShell.cvBankBranch);
+          _switchTab(shell, AppShell.cvBankBranch);
         },
         onSignOut: () {
           close();

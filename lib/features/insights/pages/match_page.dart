@@ -13,10 +13,26 @@ import '../../cv_bank/controller/cv_bank_controller.dart';
 import '../controller/match_controller.dart';
 import '../models/match_result.dart';
 
-/// Match breakdown for one application: the score, four dimensions, and the
-/// evidence behind it.
-class MatchPage extends ConsumerWidget {
+/// Match breakdown for one application, pushed from the thread or after adding
+/// a job. The Insights tab shows the same [MatchView] inside the tab shell.
+class MatchPage extends StatelessWidget {
   const MatchPage({super.key, required this.applicationId});
+
+  final String applicationId;
+
+  @override
+  Widget build(BuildContext context) {
+    return DetailScaffold(
+      title: 'Match breakdown',
+      onBack: () => context.pop(),
+      body: MatchView(applicationId: applicationId),
+    );
+  }
+}
+
+/// The score, four dimensions, and the evidence behind it.
+class MatchView extends ConsumerWidget {
+  const MatchView({super.key, required this.applicationId});
 
   final String applicationId;
 
@@ -25,17 +41,13 @@ class MatchPage extends ConsumerWidget {
     final cm = context.cm;
     final match = ref.watch(matchResultProvider(applicationId));
 
-    return DetailScaffold(
-      title: 'Match breakdown',
-      onBack: () => context.pop(),
-      body: match.when(
-        loading: () => const SizedBox.shrink(),
-        error: (_, _) => Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text('Could not load the match.', style: cm.body(color: cm.colors.neutral700)),
-        ),
-        data: (m) => _MatchBody(match: m),
+    return match.when(
+      loading: () => const SizedBox.shrink(),
+      error: (_, _) => Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text('Could not load the match.', style: cm.body(color: cm.colors.neutral700)),
       ),
+      data: (m) => _MatchBody(match: m),
     );
   }
 }

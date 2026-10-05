@@ -9,10 +9,12 @@ desktop.ini
 .vscode/
 *.iml
 
-# Flutter / Dart (for when the app code is added)
+# Flutter / Dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
 local.properties
 Pods/
+.gradle/
+.kotlin/
